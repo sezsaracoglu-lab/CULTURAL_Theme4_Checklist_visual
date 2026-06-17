@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cultural Psychology — Theme 4 Visual Study Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f1ea; --panel:#fbfaf6; --panel2:#eeebe2; --line:#dcd7c9;
+  --ink:#2c2c30; --mut:#7a7666;
+  --navy:#37425b; --slate:#5f7185; --slate-soft:#8b96a6;
+  --gold:#a98a55; --gold-soft:#c4ad7e;
+  --soft:#ecefe9; --soft2:#eceef2;
+  --green:#5d7d57; --green-bg:#e9efe4; --red:#a85a4b; --red-bg:#f1e7e2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;overflow:hidden}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#d2ccbd;border-radius:8px}
+::-webkit-scrollbar-track{background:transparent}
+.app{display:flex;height:100vh}
+.sidebar{width:238px;flex:0 0 238px;background:linear-gradient(180deg,#eef0ea,#eae7de);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:24px 16px}
+.brand{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:25px;line-height:1.06;color:var(--navy)}
+.brand small{display:block;font-family:'DM Sans';font-weight:500;font-size:10.5px;letter-spacing:2px;color:var(--mut);margin-top:7px;text-transform:uppercase}
+.nav{margin-top:30px;display:flex;flex-direction:column;gap:6px}
+.nav button{display:flex;align-items:center;gap:12px;width:100%;background:transparent;border:none;color:var(--mut);font-family:'DM Sans';font-size:15px;font-weight:500;padding:12px 14px;border-radius:9px;cursor:pointer;text-align:left;border-left:3px solid transparent;transition:.18s}
+.nav button .ic{font-size:16px;width:18px;text-align:center}
+.nav button:hover{background:#e6e3d8;color:var(--ink)}
+.nav button.active{background:#e4e6df;color:var(--navy);border-left:3px solid var(--slate)}
+.side-foot{margin-top:auto;font-size:11.5px;color:#928d7c;line-height:1.6;border-top:1px solid var(--line);padding-top:14px}
+.side-foot b{color:var(--gold)}
+.main{flex:1;overflow-y:auto;position:relative}
+.view{display:none;padding:34px 42px 70px;max-width:1180px;margin:0 auto;animation:fade .35s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1.title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;color:var(--navy);line-height:1.05;margin:6px 0 4px}
+.lead{color:var(--mut);font-size:15.5px;max-width:780px;line-height:1.6;margin-top:8px}
+.rule{height:1px;background:linear-gradient(90deg,var(--slate-soft),transparent);margin:22px 0 26px;border:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.ocard{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px;cursor:pointer;transition:.18s;position:relative;overflow:hidden}
+.ocard:hover{border-color:var(--slate);transform:translateY(-3px);box-shadow:0 12px 28px -16px rgba(55,66,91,.5)}
+.ocard .nimg{height:96px;border-radius:9px;background:#f4f5f1;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:13px;overflow:hidden}
+.ocard .nimg svg{width:100%;height:100%}
+.ocard .nnum{font-family:'Cormorant Garamond';font-size:13px;color:var(--gold);font-weight:600;letter-spacing:.5px}
+.ocard h3{font-family:'Cormorant Garamond';font-size:20px;font-weight:600;color:var(--navy);line-height:1.13;margin:3px 0 6px}
+.ocard p{font-size:12.5px;color:var(--mut);line-height:1.5}
+.ocard .chip{position:absolute;top:13px;right:13px;font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--slate);background:#eceef1;border:1px solid var(--line);padding:3px 8px;border-radius:20px}
+.sec-label{font-family:'Cormorant Garamond';font-size:23px;color:var(--navy);font-weight:600;margin:30px 0 14px;display:flex;align-items:center;gap:12px}
+.sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.lesson-top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:8px}
+.lesson-counter{font-size:13px;color:var(--gold);font-weight:600;letter-spacing:.5px}
+.navbtns{display:flex;gap:10px}
+.navbtns button{background:var(--panel);border:1px solid var(--line);color:var(--ink);font-family:'DM Sans';font-size:13.5px;font-weight:600;padding:9px 16px;border-radius:9px;cursor:pointer;transition:.16s}
+.navbtns button:hover:not(:disabled){border-color:var(--slate);color:var(--slate)}
+.navbtns button:disabled{opacity:.35;cursor:not-allowed}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 14px;margin-bottom:6px}
+.chips .lchip{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);color:var(--mut);font-size:12px;font-weight:600;padding:7px 12px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:.15s}
+.chips .lchip:hover{color:var(--ink)}
+.chips .lchip.active{background:#e6e8e2;border-color:var(--slate);color:var(--navy)}
+.stage{display:grid;grid-template-columns:62% 38%;gap:22px;align-items:stretch}
+.diagram-wrap{background:linear-gradient(160deg,#eef1ec,#eef0f3);border:1px solid var(--line);border-radius:15px;padding:16px;display:flex;flex-direction:column}
+.diagram-wrap .dtitle{font-family:'Cormorant Garamond';font-size:19px;color:var(--navy);font-weight:600;margin:2px 4px 8px;display:flex;align-items:center;gap:8px}
+.diagram-wrap svg{width:100%;height:auto;flex:1}
+.side{display:flex;flex-direction:column;gap:16px}
+.bullets{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:20px}
+.bullets h4{font-family:'Cormorant Garamond';font-size:19px;color:var(--navy);font-weight:600;margin-bottom:12px}
+.bullets ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.bullets li{display:flex;gap:11px;font-size:14px;line-height:1.5;color:#45433c}
+.bullets li .dot{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:#e7e9e3;border:1px solid var(--slate-soft);color:var(--slate);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.bullets li b{color:var(--navy)}
+.hook{background:#f4efe4;border:1px solid var(--gold-soft);border-radius:13px;padding:17px 18px}
+.hook .ht{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;display:flex;align-items:center;gap:7px}
+.hook p{margin-top:9px;font-family:'Cormorant Garamond';font-size:18px;font-style:italic;line-height:1.4;color:var(--ink)}
+.fc-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.fc-bar .filters{display:flex;gap:7px;flex-wrap:wrap}
+.fc-bar .filters button{background:var(--panel);border:1px solid var(--line);color:var(--mut);font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:20px;cursor:pointer;transition:.15s}
+.fc-bar .filters button.active{background:#e6e8e2;border-color:var(--slate);color:var(--navy)}
+.fc-bar .tools{margin-left:auto;display:flex;gap:8px}
+.fc-bar .tools button{background:var(--slate);border:none;color:#fff;font-size:13px;font-weight:600;padding:9px 16px;border-radius:9px;cursor:pointer}
+.fc-bar .tools button.ghost{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+.fc-count{font-size:12.5px;color:var(--mut);margin-bottom:14px}
+.fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:16px}
+.flip{perspective:1400px;height:190px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:13px;border:1px solid var(--line);padding:18px;display:flex;flex-direction:column;justify-content:center}
+.face.front{background:var(--panel)}
+.face.back{background:#f3f4f1;transform:rotateY(180deg);border-color:var(--slate-soft)}
+.face .ftag{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+.face.front .q{font-family:'Cormorant Garamond';font-size:21px;font-weight:600;line-height:1.2;color:var(--navy)}
+.face.back .a{font-size:13.5px;line-height:1.55;color:#403e37}
+.face.back .a b{color:var(--navy)}
+.face .hint{position:absolute;bottom:12px;right:16px;font-size:10.5px;color:#a39e8e}
+.mcq-head{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.score{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.score b{color:var(--slate);font-family:'Cormorant Garamond';font-size:18px}
+.mcq-head .tools button{background:var(--panel);border:1px solid var(--line);color:var(--ink);font-size:13px;font-weight:600;padding:9px 15px;border-radius:9px;cursor:pointer}
+.q-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:22px;margin-bottom:18px}
+.q-card .qh{display:flex;gap:12px;margin-bottom:15px}
+.q-card .qn{flex:0 0 auto;font-family:'Cormorant Garamond';font-size:15px;font-weight:700;color:#fff;background:var(--slate);width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.q-card .qt{font-size:16px;font-weight:600;line-height:1.4;color:var(--navy);padding-top:3px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:12px;align-items:flex-start;background:#f6f6f1;border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;font-size:14px;line-height:1.4;color:#45433c;transition:.14s}
+.opt:hover{border-color:var(--slate-soft)}
+.opt .ol{flex:0 0 auto;width:22px;height:22px;border-radius:6px;border:1px solid var(--slate-soft);color:var(--slate);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.opt.correct{background:var(--green-bg);border-color:var(--green);color:#2f4329}
+.opt.correct .ol{background:var(--green);border-color:var(--green);color:#fff}
+.opt.wrong{background:var(--red-bg);border-color:var(--red);color:#5a2a20}
+.opt.wrong .ol{background:var(--red);border-color:var(--red);color:#fff}
+.opt.locked{cursor:default}
+.opt.locked:hover{border-color:var(--line)}
+.explain{margin-top:13px;border-left:3px solid var(--slate-soft);background:#eef0f1;border-radius:0 9px 9px 0;padding:12px 15px;font-size:13.5px;line-height:1.55;color:#474539;display:none}
+.explain.show{display:block;animation:fade .3s}
+.explain b{color:var(--navy)}
+.explain .verdict{font-weight:700}
+.verdict.ok{color:var(--green)}.verdict.no{color:var(--red)}
+@media(max-width:880px){.sidebar{display:none}.stage{grid-template-columns:1fr}.view{padding:24px 18px 60px}h1.title{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">Cultural Psychology<small>Theme 4 · The Multicultural Workplace</small></div>
+    <nav class="nav" id="nav">
+      <button data-view="overview" class="active"><span class="ic">▦</span> Overview</button>
+      <button data-view="lessons"><span class="ic">❧</span> Lessons</button>
+      <button data-view="flashcards"><span class="ic">⚎</span> Flashcards</button>
+      <button data-view="mcq"><span class="ic">✓</span> MCQ</button>
+    </nav>
+    <div class="side-foot">Built for <b>Sezen</b><br>Erasmus University Rotterdam<br>Heine Ch.5 · Hofstede 2011 · Gündemir 2017 · Hofhuis &amp; Vietze 2025</div>
+  </aside>
+  <main class="main">
+    <section id="overview" class="view active"></section>
+    <section id="lessons" class="view"></section>
+    <section id="flashcards" class="view"></section>
+    <section id="mcq" class="view"></section>
+  </main>
+</div>
+<script>
+const C={navy:'#37425b',slate:'#5f7185',slateSoft:'#9aa3b2',gold:'#a98a55',ink:'#2c2c30',mut:'#7a7666',
+  line:'#cdc7b7',panel:'#ffffff',soft:'#eef1ec',soft2:'#eceef2',green:'#5d7d57',red:'#a85a4b'};
+function svg(inner,vb){return '<svg viewBox="'+(vb||'0 0 840 470')+'" xmlns="http://www.w3.org/2000/svg" font-family="DM Sans, sans-serif">'+
+  '<defs><marker id="arr" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="'+C.slate+'"/></marker>'+
+  '<marker id="arrg" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="'+C.green+'"/></marker>'+
+  '<marker id="arrr" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="'+C.red+'"/></marker>'+
+  '<marker id="arrgo" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="'+C.gold+'"/></marker></defs>'+inner+'</svg>';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function T(x,y,s,o){o=o||{};return '<text x="'+x+'" y="'+y+'" fill="'+(o.fill||C.ink)+'" font-size="'+(o.size||15)+'" font-family="'+(o.font||'DM Sans, sans-serif')+'" text-anchor="'+(o.anchor||'start')+'"'+(o.weight?' font-weight="'+o.weight+'"':'')+(o.style?' font-style="'+o.style+'"':'')+(o.ls?' letter-spacing="'+o.ls+'"':'')+'>'+esc(s)+'</text>';}
+function R(x,y,w,h,o){o=o||{};return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(o.rx==null?11:o.rx)+'" fill="'+(o.fill||C.panel)+'" stroke="'+(o.stroke||C.slateSoft)+'" stroke-width="'+(o.sw||1.4)+'"'+(o.dash?' stroke-dasharray="'+o.dash+'"':'')+(o.op?' opacity="'+o.op+'"':'')+'/>';}
+function LN(x1,y1,x2,y2,o){o=o||{};return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+(o.stroke||C.slate)+'" stroke-width="'+(o.sw||1.5)+'"'+(o.dash?' stroke-dasharray="'+o.dash+'"':'')+(o.marker?' marker-end="url(#'+o.marker+')"':'')+'/>';}
+function CIR(cx,cy,r,o){o=o||{};return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+(o.fill||'none')+'" stroke="'+(o.stroke||C.slateSoft)+'" stroke-width="'+(o.sw||1.4)+'"'+(o.dash?' stroke-dasharray="'+o.dash+'"':'')+(o.op?' opacity="'+o.op+'"':'')+'/>';}
+function PATH(d,o){o=o||{};return '<path d="'+d+'" fill="'+(o.fill||'none')+'" stroke="'+(o.stroke||C.slate)+'" stroke-width="'+(o.sw||1.5)+'"'+(o.dash?' stroke-dasharray="'+o.dash+'"':'')+(o.marker?' marker-end="url(#'+o.marker+')"':'')+(o.op?' opacity="'+o.op+'"':'')+'/>';}
+function boxC(x,y,w,h,lines,o){o=o||{};var s=R(x,y,w,h,o);var n=lines.length;var lh=o.lh||17;var cy=y+h/2-(n-1)*lh/2+5;lines.forEach(function(ln){s+=T(x+w/2,cy,ln.t,{anchor:'middle',size:ln.size||14,fill:ln.fill||C.ink,weight:ln.weight,style:ln.style,font:ln.font});cy+=lh;});return s;}
+function pill(x,y,w,h,txt,o){o=o||{};return R(x,y,w,h,{rx:h/2,fill:o.fill||'#eceef1',stroke:o.stroke||C.slateSoft,sw:o.sw})+T(x+w/2,y+h/2+5,txt,{anchor:'middle',size:o.size||13,fill:o.tfill||C.navy,weight:o.weight||600});}
+const lessons=[];
+function addLesson(o){lessons.push(o);}
+
+/* L1 — culture at work & teams */
+addLesson({num:1,topic:'Heine Ch.5',title:'Culture at Work & Teams',
+svg:(function(){var g='';
+g+=T(420,36,'Hide individual effort \u2014 what happens?',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=T(225,68,'INDIVIDUALIST \u2192 loafing',{anchor:'middle',size:12.5,fill:C.red,weight:700});
+g+=LN(90,200,360,200,{stroke:C.slateSoft,sw:1.2});g+=LN(90,90,90,200,{stroke:C.slateSoft,sw:1.2});
+g+=PATH('M110,110 L160,135 L230,160 L320,185',{stroke:C.red,sw:2.4});
+g+=T(120,215,'group size \u2192',{size:10,fill:C.mut});g+=T(70,150,'effort',{size:10,fill:C.mut,anchor:'middle'});
+g+=T(225,238,'less effort as the crowd grows',{anchor:'middle',size:10.5,fill:C.mut});
+g+=LN(420,80,420,250,{stroke:C.line,sw:1,dash:'3 5'});
+g+=T(615,68,'COLLECTIVIST \u2192 striving',{anchor:'middle',size:12.5,fill:C.green,weight:700});
+g+=LN(480,200,750,200,{stroke:C.slateSoft,sw:1.2});g+=LN(480,90,480,200,{stroke:C.slateSoft,sw:1.2});
+g+=PATH('M500,185 L560,160 L640,135 L720,112',{stroke:C.green,sw:2.4});
+g+=T(615,238,'works HARDER for the valued in-group',{anchor:'middle',size:10.5,fill:C.mut});
+g+=R(95,272,700,150,{stroke:C.line});
+g+=T(120,298,'Culture follows us to work.',{size:12.5,weight:700,fill:C.navy});
+g+=T(285,298,'eBay lost China by ignoring guanxi (relationship + mutual obligation);',{size:11.5,fill:C.ink});
+g+=T(120,320,'TaoBao let buyers & sellers chat and build connections \u2014 and won.',{size:11.5,fill:C.ink});
+g+=T(120,350,'Social loafing = slack when your effort is hidden (rope-pull study).',{size:11.5,fill:C.mut});
+g+=T(120,372,'Social striving = collectivists perform BETTER with in-group than alone (Chinese, Israeli managers).',{size:11.5,fill:C.mut});
+g+=T(120,400,'Shame \u2192 Filipinos work harder to restore harmony; Dutch withdraw.',{size:11.5,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','Culture shapes work: eBay failed in China by ignoring <b>guanxi</b> (reciprocal relationships).'],
+['2','<b>Social loafing</b>: people exert less effort when their individual contribution is hidden.'],
+['3','Loafing is weaker in collectivist cultures \u2014 which can show <b>social striving</b> (harder in a group).'],
+['4','Collectivists identify with group goals; don\u2019t derogate the team when they outperform it.'],
+['5','Shame raises effort in collectivists (restore harmony) but lowers it in individualists.']
+],
+hook:'In a tug-of-war where no one sees your pull, an individualist relaxes the rope while a collectivist pulls harder for the team.'});
+
+/* L2 — diversity double-edged sword */
+addLesson({num:2,topic:'Heine Ch.5',title:'Diversity in the Workplace',
+svg:(function(){var g='';
+g+=T(420,40,'Cultural diversity = a double-edged sword',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=R(70,70,330,150,{stroke:C.red,fill:'#f5ece8'});
+g+=T(235,98,'\u2717 THE COST: friction',{anchor:'middle',size:13,fill:C.red,weight:700});
+g+=T(235,124,'stereotyping, distrust, factions,',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(235,144,'communication problems,',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(235,164,'weaker cohesion',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(235,192,'(tends to fade over time)',{anchor:'middle',size:10.5,fill:C.mut});
+g+=R(440,70,330,150,{stroke:C.green,fill:'#eaf0e6'});
+g+=T(605,98,'\u2713 THE BENEFIT: information',{anchor:'middle',size:13,fill:C.green,weight:700});
+g+=T(605,124,'more viewpoints \u2192 more info,',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(605,144,'deeper processing \u2192 more',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(605,164,'creativity & problem-solving',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(605,192,'(esp. when team values learning)',{anchor:'middle',size:10.5,fill:C.mut});
+g+=R(95,250,700,168,{stroke:C.line});
+g+=T(120,276,'Managers capture the benefit & limit the friction by:',{size:12,weight:700,fill:C.navy});
+g+=T(140,300,'\u2022 using explicit strategies to avoid communication breakdown',{size:11.5,fill:C.ink});
+g+=T(140,322,'\u2022 highlighting that BOTH majority and minority members contribute',{size:11.5,fill:C.ink});
+g+=T(140,344,'\u2022 making clear that BOTH diversity AND merit are valued (G\u00FCndemir et al.)',{size:11.5,fill:C.ink});
+g+=T(140,366,'\u2022 taking everyone\u2019s perspective',{size:11.5,fill:C.ink});
+g+=T(140,388,'\u2022 appreciating different kinds of knowledge',{size:11.5,fill:C.ink});
+return svg(g);})(),
+bullets:[
+['1','Diverse teams are a <b>double-edged sword</b>.'],
+['2','<b>Cost</b>: observable differences cause stereotyping, distrust, factions, weaker cohesion (fades over time).'],
+['3','<b>Benefit</b>: diversity is an <b>information resource</b> \u2192 deeper processing, more creativity.'],
+['4','Diverse teams do best when tasks are clear and the team values self-improvement.'],
+['5','Good leaders value <b>both diversity and merit</b> and take everyone\u2019s perspective.']
+],
+hook:'A mixed team is a box of mismatched tools \u2014 awkward at first, but it can build things a matching set never could.'});
+
+/* L3 — creativity & innovation */
+addLesson({num:3,topic:'Heine Ch.5',title:'Creativity & Innovation',
+svg:(function(){var g='';
+g+=T(420,38,'Creativity = NOVEL \u00D7 USEFUL (Amabile)',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=CIR(330,180,95,{stroke:C.slate,fill:'#e7edf2',op:.55});
+g+=CIR(510,180,95,{stroke:C.gold,fill:'#f1ece1',op:.5});
+g+=T(255,120,'NOVELTY',{anchor:'middle',size:13,fill:C.navy,weight:700});
+g+=T(255,138,'(individualism)',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(585,120,'USEFULNESS',{anchor:'middle',size:13,fill:C.navy,weight:700});
+g+=T(585,138,'(collectivism)',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(420,176,'CREATIVE',{anchor:'middle',size:12.5,fill:C.green,weight:700});
+g+=T(420,196,'idea',{anchor:'middle',size:11,fill:C.ink});
+g+=T(255,200,'jelly hammer',{anchor:'middle',size:9.5,fill:C.mut});g+=T(585,200,'identical hammer',{anchor:'middle',size:9.5,fill:C.mut});
+g+=R(95,288,700,130,{stroke:C.line});
+g+=T(120,314,'Two components split by culture:',{size:12,weight:700,fill:C.navy});
+g+=T(140,338,'\u2022 Individualism (uniqueness motive) \u2192 NOVELTY \u2192 breakthrough innovations (the West).',{size:11.5,fill:C.ink});
+g+=T(140,360,'\u2022 Collectivism (group goals) \u2192 USEFULNESS \u2192 incremental innovations (Japan leads patents).',{size:11.5,fill:C.ink});
+g+=T(140,388,'\u2192 The best creative team is culturally MIXED (novelty + usefulness).',{size:11.5,fill:C.gold,style:'italic'});
+return svg(g);})(),
+bullets:[
+['1','<b>Creativity</b> = ideas that are both <b>novel AND useful</b> (a jelly hammer is novel but useless).'],
+['2','<b>Individualism</b> (uniqueness motive) facilitates <b>novelty</b> \u2014 Westerners produce more original work.'],
+['3','<b>Collectivism</b> (group concern) facilitates <b>usefulness</b> \u2014 practical, appropriate ideas.'],
+['4','Innovation type follows: individualist \u2192 <b>breakthrough</b>; collectivist \u2192 <b>incremental</b> (Japan leads patents).'],
+['5','<b>Multicultural teams</b> have a creative edge \u2014 many ways of seeing a problem.']
+],
+hook:'Novelty without usefulness is a jelly hammer; usefulness without novelty is the hammer you already own. You need both \u2014 so mix the team.'});
+
+/* L4 — leadership */
+addLesson({num:4,topic:'Heine Ch.5',title:'Leadership: Universal, Contingent & Paternalistic',
+svg:(function(){var g='';
+g+=T(420,34,'GLOBE: 62 societies, 17,000+ managers',{anchor:'middle',size:13,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=R(60,58,330,150,{stroke:C.green,sw:1.5});
+g+=T(225,84,'UNIVERSALLY DESIRABLE',{anchor:'middle',size:12.5,fill:C.green,weight:700});
+g+=T(80,112,'\u2022 Charismatic / value-based',{size:11.5,fill:C.ink});g+=T(95,130,'(inspire from core beliefs)',{size:10.5,fill:C.mut});
+g+=T(80,156,'\u2022 Team-oriented',{size:11.5,fill:C.ink});g+=T(95,174,'(build teams, common goal)',{size:10.5,fill:C.mut});
+g+=T(80,196,'\u2717 universally BAD: egocentric, ruthless, loner',{size:10.5,fill:C.red});
+g+=R(440,58,330,150,{stroke:C.slate,sw:1.5});
+g+=T(605,84,'CULTURE-CONTINGENT',{anchor:'middle',size:12.5,fill:C.navy,weight:700});
+g+=T(460,110,'\u2022 Humane-oriented \u2014 Southern Asia',{size:11,fill:C.ink});
+g+=T(460,132,'\u2022 Autonomous \u2014 Eastern Europe',{size:11,fill:C.ink});
+g+=T(460,154,'\u2022 Participative \u2014 Northern Europe',{size:11,fill:C.ink});
+g+=T(460,176,'\u2022 Self-protective \u2014 (Southern Asia)',{size:11,fill:C.ink});
+g+=T(605,200,'match the leader to the culture',{anchor:'middle',size:10.5,fill:C.gold,style:'italic'});
+g+=R(95,232,700,90,{stroke:C.gold,sw:1.5});
+g+=T(120,258,'PATERNALISTIC leadership',{size:12.5,fill:C.navy,weight:700});
+g+=T(300,258,'\u2014 guides work AND personal life like a caring-but-firm parent;',{size:11.5,fill:C.ink});
+g+=T(120,280,'subordinates give loyalty & deference. Valued in Asian, Latin, Middle-Eastern orgs;',{size:11.5,fill:C.ink});
+g+=T(120,302,'seen as invading privacy in individualist settings. Tips into autocracy \u2192 loyalty lost.',{size:11.5,fill:C.mut});
+g+=R(95,338,700,80,{stroke:C.line});
+g+=T(120,364,'GLOBE\u2019s conclusion:',{size:12,weight:700,fill:C.navy});
+g+=T(255,364,'effective leadership = the leader\u2019s behaviour MATCHES the culture\u2019s desired style.',{size:11.5,fill:C.ink});
+g+=T(120,392,'Globalised workplaces need a GLOBAL leader: flexible, self-aware, cosmopolitan, knows local cultures.',{size:11.5,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','<b>GLOBE</b> (62 societies) found two universally desirable types: <b>charismatic/value-based</b> and <b>team-oriented</b>.'],
+['2','Universally bad: egocentric, ruthless, dictatorial, loner.'],
+['3','<b>Culture-contingent</b> styles: humane (S. Asia), autonomous (E. Europe), participative (N. Europe), self-protective.'],
+['4','<b>Paternalistic</b> leaders parent employees\u2019 work & lives \u2014 valued in Asian/Latin/Middle-Eastern orgs, resented in individualist ones.'],
+['5','Effectiveness = matching the leader\u2019s style to the culture; globalised firms need a <b>global leader</b>.']
+],
+hook:'Charisma and team-building are passports that work at every border; humane, autonomous, participative and paternalistic styles need the right local visa.'});
+
+/* L5 — influence tactics */
+addLesson({num:5,topic:'Heine Ch.5',title:'Cultural Traits & Influence Tactics',
+svg:(function(){var g='';
+g+=T(420,38,'How leaders get their way \u2014 by culture',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+var tac=[['Rational persuasion','USA','facts + reasoned argument (can disrupt hierarchy elsewhere)',C.slate],
+['Guanxi','China','reciprocal obligation in relational networks; protect \u2018face\u2019',C.gold],
+['Wasta','Arab world','influence via family/kinship \u201Cconnections / pull\u201D',C.gold],
+['Jeitinho','Brazil','creative work-arounds to navigate rigid rules',C.gold],
+['Ringi / nemawashi','Japan','build consensus informally, then formal approval',C.slate]];
+tac.forEach(function(d,i){var y=64+i*68;g+=R(60,y,250,56,{stroke:d[3]});g+=T(74,y+24,d[0],{size:12.5,fill:C.navy,weight:700});g+=T(74,y+43,d[1],{size:10.5,fill:C.mut});
+g+=LN(312,y+28,348,y+28,{marker:'arr'});g+=T(360,y+32,d[2],{size:11,fill:C.ink});});
+g+=T(420,442,'Indirect, relationship-based tactics fit collectivist/high-context cultures; rational persuasion fits the US.',{anchor:'middle',size:11,fill:C.gold,style:'italic'});
+return svg(g);})(),
+bullets:[
+['1','<b>Rational persuasion</b> (facts + reasoned arguments) suits American managers; risks open conflict elsewhere.'],
+['2','<b>Guanxi</b> (China): influence through reciprocal obligations in relational networks; protect face.'],
+['3','<b>Wasta</b> (Arab world): influence via family/kinship \u201Cconnections\u201D (sometimes tied to corruption).'],
+['4','<b>Jeitinho</b> (Brazil): creative, pragmatic ways around inflexible rules.'],
+['5','<b>Ringi / nemawashi</b> (Japan): build consensus informally before a proposal is formally approved.']
+],
+hook:'In the US you win with a better argument; in China with a better relationship; in Brazil with a clever work-around; in Japan with quiet consensus first.'});
+
+/* L6 — culture & justice */
+addLesson({num:6,topic:'Heine Ch.5',title:'Culture & Justice',
+svg:(function(){var g='';
+g+=T(420,36,'Distributive justice: 3 ways to be \u201Cfair\u201D',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=boxC(60,62,240,74,[{t:'EQUITY',size:14,fill:C.navy,weight:700},{t:'reward by contribution',size:11,fill:C.ink},{t:'meritocracy (individualist)',size:10.5,fill:C.mut}],{stroke:C.gold});
+g+=boxC(300,62,240,74,[{t:'EQUALITY',size:14,fill:C.navy,weight:700},{t:'everyone the same',size:11,fill:C.ink},{t:'seniority (collectivist)',size:10.5,fill:C.mut}],{stroke:C.slate});
+g+=boxC(540,62,240,74,[{t:'NEED',size:14,fill:C.navy,weight:700},{t:'most to the neediest',size:11,fill:C.ink},{t:'welfare, health care',size:10.5,fill:C.mut}],{stroke:C.green});
+g+=T(420,168,'Berman: split a bonus between an excellent vs. a needy worker',{anchor:'middle',size:12,fill:C.navy,weight:600});
+g+=LN(120,310,120,190,{stroke:C.slateSoft,sw:1.2});g+=LN(120,310,760,310,{stroke:C.slateSoft,sw:1.2});
+g+=T(250,330,'USA',{anchor:'middle',size:11,fill:C.navy,weight:700});g+=T(620,330,'India',{anchor:'middle',size:11,fill:C.navy,weight:700});
+g+=R(170,250,40,60,{fill:'#eef0ea',stroke:C.green});g+=R(215,225,40,85,{fill:'#eef0ea',stroke:C.slate});g+=R(260,206,40,104,{fill:'#f1ece1',stroke:C.gold});
+g+=R(540,200,40,110,{fill:'#eef0ea',stroke:C.green});g+=R(585,235,40,75,{fill:'#eef0ea',stroke:C.slate});g+=R(630,268,40,42,{fill:'#f1ece1',stroke:C.gold});
+g+=T(280,200,'US favours EQUITY (reward excellent)',{anchor:'middle',size:10,fill:C.gold});
+g+=T(560,194,'India favours NEED (help needy)',{anchor:'middle',size:10,fill:C.green});
+g+=T(700,250,'need',{size:9,fill:C.green});g+=T(700,266,'equality',{size:9,fill:C.slate});g+=T(700,282,'equity',{size:9,fill:C.gold});
+g+=R(95,348,700,70,{stroke:C.line});
+g+=T(120,374,'Individualists favour EQUITY; collectivists use EQUALITY for in-group, equity for out-group.',{size:11.5,fill:C.ink});
+g+=T(120,398,'Also: just-world belief \u2192 performance pay; lower income inequality \u2192 preference for equal sharing.',{size:11.5,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','<b>Distributive justice</b> has three principles: <b>equity</b> (merit), <b>equality</b> (same for all), <b>need</b> (most to neediest).'],
+['2','Equity systems = <b>meritocracies</b> (individualist, motivating but competitive); equality includes <b>seniority</b> systems.'],
+['3','<b>Berman</b>: Americans split a bonus by equity (reward the excellent worker); Indians by need (help the needy one).'],
+['4','Individualists favour equity; collectivists use <b>equality for in-group</b>, equity for out-group.'],
+['5','A stronger <b>just-world belief</b> and higher income inequality predict preferring performance-based pay.']
+],
+hook:'Three recipes for \u201Cfair\u201D: pay the hardest worker (equity), pay everyone the same (equality), or pay whoever needs it most (need). Your culture picks the recipe.'});
+
+/* L7 — competition, cooperation, negotiation */
+addLesson({num:7,topic:'Heine Ch.5',title:'Competition, Cooperation & Negotiation',
+svg:(function(){var g='';
+g+=R(60,58,330,120,{stroke:C.red});
+g+=T(225,84,'ZERO-SUM = competition',{anchor:'middle',size:12.5,fill:C.red,weight:700});
+g+=T(225,110,'one\u2019s gain = other\u2019s loss',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(225,132,'(chess)',{anchor:'middle',size:11,fill:C.mut});
+g+=T(225,158,'individualist default',{anchor:'middle',size:10.5,fill:C.mut});
+g+=R(440,58,330,120,{stroke:C.green});
+g+=T(605,84,'NON-ZERO-SUM = cooperation',{anchor:'middle',size:12.5,fill:C.green,weight:700});
+g+=T(605,110,'both can gain (trade)',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(605,132,'marble game: Mexican kids',{anchor:'middle',size:11,fill:C.mut});
+g+=T(605,150,'cooperate more than Americans',{anchor:'middle',size:11,fill:C.mut});
+g+=T(605,170,'collectivist default',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(420,212,'Negotiation = the real-world marble game',{anchor:'middle',size:12.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=boxC(70,232,320,70,[{t:'CONFRONTATIONAL / ADVERSARIAL',size:11.5,fill:C.red,weight:700},{t:'ignore the other side, press your cause:',size:10.5,fill:C.ink},{t:'threats, accusations (individualist)',size:10.5,fill:C.mut}],{stroke:C.red});
+g+=boxC(450,232,320,70,[{t:'COMPROMISE',size:11.5,fill:C.green,weight:700},{t:'increase the other\u2019s satisfaction,',size:10.5,fill:C.ink},{t:'use a mediator (collectivist)',size:10.5,fill:C.mut}],{stroke:C.green});
+g+=R(95,318,700,100,{stroke:C.line});
+g+=T(120,344,'Collectivists compromise to preserve the relationship; individualists compete for resources.',{size:11.5,fill:C.ink});
+g+=T(120,368,'Anger wins concessions from Americans but backfires with East Asians (who prefer apology).',{size:11.5,fill:C.mut});
+g+=T(120,392,'Low-context = direct info-sharing; high-context = indirect cues + appeals to emotion.',{size:11.5,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','A <b>zero-sum</b> exchange is competitive (one\u2019s gain = other\u2019s loss); <b>non-zero-sum</b> is cooperative (both can gain).'],
+['2','In the <b>marble game</b>, collectivist (Mexican) children cooperated far more than American children.'],
+['3','Negotiation strategies: <b>confrontational/adversarial</b> (press your cause) vs. <b>compromise</b> (satisfy both).'],
+['4','Collectivists compromise to keep relationships; individualists compete over resources.'],
+['5','<b>Anger</b> wins concessions from Americans but backfires with East Asians; low- vs. high-context shapes directness.']
+],
+hook:'Some see a deal as chess (I win, you lose); others as trade (we both win). Collectivists play trade and compromise; individualists play chess and confront.'});
+
+/* L8 — what is culture */
+addLesson({num:8,topic:'Hofstede 2011',title:'What Is Culture? (The Onion)',
+svg:(function(){var g='';
+g+=T(420,36,'\u201CThe collective programming of the mind\u201D',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=CIR(230,200,118,{stroke:C.slate,fill:'#eef0f3',op:.5});
+g+=CIR(230,200,90,{stroke:C.slate,fill:'#e7edf2',op:.6});
+g+=CIR(230,200,60,{stroke:C.gold,fill:'#f1ece1',op:.6});
+g+=CIR(230,200,30,{stroke:C.navy,fill:'#fff'});
+g+=T(230,204,'VALUES',{anchor:'middle',size:11,fill:C.navy,weight:700});
+g+=T(230,103,'Symbols',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(230,128,'Heroes',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(230,152,'Rituals',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(230,338,'practices (visible) \u2192 core values (deep)',{anchor:'middle',size:10.5,fill:C.mut,style:'italic'});
+g+=R(400,90,390,210,{stroke:C.line});
+g+=T(420,118,'Levels of culture:',{size:12,weight:700,fill:C.navy});
+g+=T(420,142,'nation \u2022 ethnic group \u2022 organisation \u2022',{size:11,fill:C.ink});
+g+=T(420,162,'occupation \u2022 gender \u2022 generation \u2022 class',{size:11,fill:C.ink});
+g+=T(420,192,'Societal/national culture = deep VALUES',{size:11,fill:C.gold,weight:600});
+g+=T(420,212,'(learned young, often unconscious).',{size:10.5,fill:C.mut});
+g+=T(420,238,'Organisational culture = visible PRACTICES',{size:11,fill:C.gold,weight:600});
+g+=T(420,258,'(learned on the job, exchangeable).',{size:10.5,fill:C.mut});
+g+=T(420,286,'Always COLLECTIVE, never individual.',{size:11,fill:C.navy,weight:600});
+g+=R(400,318,390,100,{stroke:C.line});
+g+=T(420,344,'The bell-curve image:',{size:11.5,weight:700,fill:C.navy});
+g+=PATH('M430,400 q40,-55 80,0',{stroke:C.slate,sw:1.8});g+=PATH('M520,400 q40,-40 80,0',{stroke:C.gold,sw:1.8,dash:'4 3'});
+g+=T(420,392,'individuals vary, but the whole curve',{size:10.5,fill:C.ink});g+=T(620,360,'shifts',{size:10,fill:C.gold});
+g+=T(420,412,'shifts from one society to the next.',{size:10.5,fill:C.ink});
+return svg(g);})(),
+bullets:[
+['1','Culture = <b>\u201Cthe collective programming of the mind that distinguishes one group from another.\u201D</b>'],
+['2','It is always <b>collective</b>, and attaches to many levels (nation, organisation, occupation, gender\u2026).'],
+['3','National culture lives in deep <b>values</b> (learned young); organisational culture in visible <b>practices</b>.'],
+['4','The \u201Conion\u201D: symbols \u2192 heroes \u2192 rituals \u2192 core values.'],
+['5','Picture a <b>bell curve</b>: individuals vary, but the whole curve shifts between societies.']
+],
+hook:'Culture is mental software shared by a group \u2014 an onion whose visible layers (symbols, rituals) wrap a deep core of values you absorbed before you could question them.'});
+
+/* L9 — predecessors */
+addLesson({num:9,topic:'Hofstede 2011',title:'Predecessors of the Dimensions',
+svg:(function(){var g='';
+g+=T(420,36,'Thinkers who guessed the dimensions first',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+var p=[['Parsons & Shils (1951)','5 PATTERN VARIABLES','forced choices, e.g. self- vs collectivity-orientation, universalism vs particularism'],
+['Kluckhohn & Strodtbeck (1961)','5 VALUE ORIENTATIONS','human nature, people\u2013nature, time, activity, relationships'],
+['Mary Douglas (1973)','GRID & GROUP','group = claim of the group; grid = rules governing interaction'],
+['Inkeles & Levinson (1969)','3 STANDARD ANALYTIC ISSUES','authority; self (incl. masculinity/femininity); dilemmas/aggression']];
+p.forEach(function(d,i){var y=62+i*88;g+=R(60,y,300,72,{stroke:i===3?C.gold:C.slate});g+=T(74,y+26,d[0],{size:11,fill:C.mut});g+=T(74,y+48,d[1],{size:12.5,fill:C.navy,weight:700});
+g+=LN(362,y+36,398,y+36,{marker:'arr'});g+=T(410,y+33,d[2].slice(0,46),{size:10.5,fill:C.ink});if(d[2].length>46)g+=T(410,y+50,d[2].slice(46),{size:10.5,fill:C.ink});});
+g+=T(420,430,'Inkeles & Levinson\u2019s 3 issues were empirically confirmed in Hofstede\u2019s IBM data 20 years later.',{anchor:'middle',size:11,fill:C.gold,style:'italic'});
+return svg(g);})(),
+bullets:[
+['1','Earlier scholars proposed cultural dimensions but mixed levels of analysis and lacked data.'],
+['2','<b>Parsons & Shils</b>: five <b>pattern variables</b> (e.g. self- vs collectivity-orientation, universalism vs particularism).'],
+['3','<b>Kluckhohn & Strodtbeck</b>: five <b>value orientations</b> (human nature, time, activity\u2026).'],
+['4','<b>Mary Douglas</b>: <b>grid & group</b> \u2014 the claim of the group and the rules on interaction.'],
+['5','<b>Inkeles & Levinson</b>: three issues (authority; self; dilemmas) \u2014 later confirmed in Hofstede\u2019s data.']
+],
+hook:'Several thinkers sketched the map of culture by intuition; Hofstede was the one who finally surveyed the territory and drew it to scale.'});
+
+/* L10 — IBM survey */
+addLesson({num:10,topic:'Hofstede 2011',title:'The IBM Survey & the Ecological Method',
+svg:(function(){var g='';
+g+=R(80,58,680,60,{stroke:C.line,fill:'#eef0ea'});
+g+=T(420,82,'IBM (\u201CHermes\u201D) employee value survey',{anchor:'middle',size:12.5,fill:C.navy,weight:700});
+g+=T(420,102,'100,000+ questionnaires \u2022 50+ countries \u2022 surveyed twice',{anchor:'middle',size:11,fill:C.mut});
+g+=T(225,150,'INDIVIDUAL level',{anchor:'middle',size:12,fill:C.red,weight:700});
+g+=T(225,170,'confusing patterns',{anchor:'middle',size:10.5,fill:C.mut});
+for(var i=0;i<14;i++){g+=CIR(120+(i%7)*30,200+Math.floor(i/7)*26,5,{fill:'#e7edf2',stroke:C.slateSoft});}
+g+=LN(360,200,420,200,{marker:'arr'});g+=T(390,190,'aggregate',{size:9.5,fill:C.mut,anchor:'middle'});
+g+=T(615,150,'ECOLOGICAL (country) level',{anchor:'middle',size:12,fill:C.green,weight:700});
+g+=T(615,170,'clear, different patterns',{anchor:'middle',size:10.5,fill:C.mut});
+g+=R(500,188,70,28,{rx:6,stroke:C.green,fill:'#eef0ea'});g+=T(535,206,'country A',{anchor:'middle',size:9.5,fill:C.navy});
+g+=R(580,188,70,28,{rx:6,stroke:C.green,fill:'#eef0ea'});g+=T(615,206,'country B',{anchor:'middle',size:9.5,fill:C.navy});
+g+=R(660,188,70,28,{rx:6,stroke:C.green,fill:'#eef0ea'});g+=T(695,206,'country C',{anchor:'middle',size:9.5,fill:C.navy});
+g+=R(95,250,700,168,{stroke:C.line});
+g+=T(120,276,'The breakthrough: analyse COUNTRY averages, not individuals.',{size:12,weight:700,fill:C.navy});
+g+=T(120,300,'\u2022 Country-level correlations differ from individual ones \u2014 don\u2019t confuse the two levels.',{size:11.5,fill:C.ink});
+g+=T(120,322,'\u2022 IBM staff = near-perfect matched samples (alike but for nationality) \u2192 national differences pop out.',{size:11.5,fill:C.ink});
+g+=T(120,344,'\u2022 Confirmed with non-IBM management trainees from ~30 countries.',{size:11.5,fill:C.ink});
+g+=T(120,372,'Ecological factor analysis of 32 value items \u2192 4 common problems \u2192 the first 4 DIMENSIONS,',{size:11.5,fill:C.mut});
+g+=T(120,394,'matching Inkeles & Levinson\u2019s issues (authority, self, individual\u2013group, ego\u2013social values).',{size:11.5,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','Data came from the <b>IBM</b> survey: 100,000+ questionnaires from 50+ countries.'],
+['2','The breakthrough: analyse at the <b>ecological (country) level</b>, not the individual level.'],
+['3','Country-level patterns differ from individual ones \u2014 confusing the two is a classic error.'],
+['4','IBM employees were <b>matched samples</b> (alike but for nationality), so national differences stood out.'],
+['5','Factor analysis revealed four common problems \u2192 the first <b>four dimensions</b>.']
+],
+hook:'By averaging IBM\u2019s employees country by country, Hofstede filtered out personality \u201Cnoise\u201D and let national culture ring out clearly.'});
+
+/* L11 — six dimensions */
+addLesson({num:11,topic:'Hofstede 2011',title:'The Six Dimensions (+ Cautions)',
+svg:(function(){var g='';
+g+=T(420,34,'Six rulers for measuring national cultures',{anchor:'middle',size:13,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+var d=[['PDI','Power Distance','accept unequal power'],
+['UAI','Uncertainty Avoidance','discomfort with ambiguity'],
+['IDV','Individualism\u2013Collectivism','\u201CI\u201D vs \u201Cwe\u201D ties'],
+['MAS','Masculinity\u2013Femininity','assertive vs caring values'],
+['LTO','Long\u2013Short Term','future vs present/past'],
+['IVR','Indulgence\u2013Restraint','enjoy vs control desires']];
+d.forEach(function(x,i){var col=i%2,row=(i-col)/2;var bx=60+col*375;var by=58+row*78;
+g+=R(bx,by,355,64,{stroke:C.slate});
+g+=R(bx+12,by+14,38,36,{rx:8,stroke:C.gold});g+=T(bx+31,by+38,x[0],{anchor:'middle',size:13,fill:C.gold,weight:700,font:'Cormorant Garamond, serif'});
+g+=T(bx+62,by+30,x[1],{size:12.5,fill:C.navy,weight:700});g+=T(bx+62,by+48,x[2],{size:10.5,fill:C.mut});});
+g+=R(95,318,700,100,{stroke:C.gold,sw:1.5});
+g+=T(120,344,'Two cautions Hofstede stresses:',{size:12,weight:700,fill:C.navy});
+g+=T(140,368,'\u2022 Control for WEALTH \u2014 it tracks individualism & low power distance (wealth \u2192 individualism).',{size:11.5,fill:C.ink});
+g+=T(140,390,'\u2022 Never use a country\u2019s AVERAGE to stereotype an individual \u2014 huge within-culture variation.',{size:11.5,fill:C.ink});
+g+=T(140,410,'Use practice-based dimensions for organisations; the model is basic and enduring.',{size:11,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','<b>PDI</b> \u2014 acceptance of unequal power; <b>UAI</b> \u2014 discomfort with ambiguity/the unknown.'],
+['2','<b>IDV</b> \u2014 individualism vs collectivism (\u201CI\u201D vs \u201Cwe\u201D); <b>MAS</b> \u2014 assertive vs caring values.'],
+['3','<b>LTO</b> \u2014 long- vs short-term orientation (future vs present); <b>IVR</b> \u2014 indulgence vs restraint.'],
+['4','Caution 1: always <b>control for national wealth</b> (it correlates with individualism & low PDI).'],
+['5','Caution 2: scores describe <b>societies, not individuals</b> \u2014 never use them to stereotype a person.']
+],
+hook:'Six rulers \u2014 power, uncertainty, I-vs-we, tough-vs-tender, future-vs-now, indulge-vs-restrain \u2014 measure whole nations, never the person in front of you.'});
+
+/* L12 — Gündemir aim & leadership gap */
+addLesson({num:12,topic:'G\u00FCndemir 2017',title:'Aim & the Minority Leadership Gap',
+svg:(function(){var g='';
+g+=T(420,38,'Can a diversity policy make minorities want to LEAD?',{anchor:'middle',size:13,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=PATH('M260,80 L580,80 L500,150 L340,150 Z',{stroke:C.gold,fill:'#f1ece1'});g+=T(420,118,'few minorities at the TOP',{anchor:'middle',size:11,fill:C.navy,weight:700});
+g+=PATH('M340,150 L500,150 L470,210 L370,210 Z',{stroke:C.slate,fill:'#e7edf2'});
+g+=PATH('M370,210 L470,210 L430,280 L410,280 Z',{stroke:C.slate,fill:'#eef0f3'});
+g+=T(610,118,'\u2190 ~1% of Dutch top posts;',{size:10.5,fill:C.mut});g+=T(610,134,'very few Fortune 500 minority CEOs',{size:10.5,fill:C.mut});
+g+=T(200,200,'workforce is',{size:10.5,fill:C.mut});g+=T(200,216,'diverse at the base',{size:10.5,fill:C.mut});
+g+=R(95,300,700,118,{stroke:C.line});
+g+=T(120,326,'The leadership gap has two sources:',{size:12,weight:700,fill:C.navy});
+g+=T(140,350,'\u2022 EXTERNAL barriers \u2014 prejudice, discrimination.',{size:11.5,fill:C.ink});
+g+=T(140,372,'\u2022 INTERNAL factors \u2014 minorities\u2019 own leadership self-perceptions & aspirations.',{size:11.5,fill:C.ink});
+g+=T(120,400,'This study targets the under-studied bottom-up side: minorities as ACTORS, not just targets.',{size:11.5,fill:C.gold,style:'italic'});
+return svg(g);})(),
+bullets:[
+['1','<b>Aim</b>: test whether formal diversity policies shape minorities\u2019 leadership self-perceptions and goals.'],
+['2','Diversity is valuable but mission statements can <b>backfire</b> (minorities feel distrusted).'],
+['3','Minorities are scarce at the top (e.g. ~1% of Dutch corporate top posts) \u2014 the <b>leadership gap</b>.'],
+['4','The gap stems from <b>external</b> barriers (prejudice) and <b>internal</b> ones (self-perceptions).'],
+['5','Focus on the bottom-up process: minorities as <b>actors</b> in leadership emergence.']
+],
+hook:'The workforce is diverse at the bottom but pale at the top \u2014 and part of the reason is whether minorities themselves feel \u201Cleadership is for me.\u201D'});
+
+/* L13 — three ideologies & hypotheses */
+addLesson({num:13,topic:'G\u00FCndemir 2017',title:'Three Ideologies & the Hypotheses',
+svg:(function(){var g='';
+g+=T(420,36,'Three diversity policy signals on the wall',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=boxC(55,60,240,86,[{t:'MULTICULTURALISM',size:12,fill:C.green,weight:700},{t:'\u201Cwe value your group\u201D',size:11,fill:C.ink},{t:'affirms minority identity',size:10.5,fill:C.mut}],{stroke:C.green});
+g+=boxC(300,60,240,86,[{t:'VALUE-IN-INDIVIDUAL',size:12,fill:C.green,weight:700},{t:'\u201Cwe value you as unique\u201D',size:11,fill:C.ink},{t:'(behaves like multicult.)',size:10.5,fill:C.mut}],{stroke:C.green});
+g+=boxC(545,60,240,86,[{t:'VALUE-IN-HOMOGENEITY',size:11.5,fill:C.red,weight:700},{t:'colourblind: \u201Call the same\u201D',size:11,fill:C.ink},{t:'drop your subgroup identity',size:10.5,fill:C.mut}],{stroke:C.red});
+g+=T(420,182,'Predicted chain (H1\u2013H3):',{anchor:'middle',size:12,fill:C.navy,weight:600});
+g+=boxC(70,205,200,52,[{t:'value-difference policy',size:11,fill:C.navy,weight:700}],{stroke:C.slate});
+g+=LN(272,231,330,231,{marker:'arrg'});
+g+=boxC(332,205,200,52,[{t:'perceived OPEN',size:11,fill:C.navy,weight:700},{t:'diversity climate (H1)',size:10,fill:C.mut}],{stroke:C.green});
+g+=LN(534,231,592,231,{marker:'arrg'});
+g+=boxC(594,205,190,52,[{t:'leadership self-',size:11,fill:C.navy,weight:700},{t:'efficacy & goals (H2)',size:10,fill:C.mut}],{stroke:C.slate});
+g+=R(95,285,700,128,{stroke:C.line});
+g+=T(120,311,'H1: multiculturalism / value-in-individual \u2192 more perceived OPEN diversity climate.',{size:11.5,fill:C.ink});
+g+=T(120,335,'H2: \u2192 more positive leadership self-perceptions & goals (vs. value-in-homogeneity).',{size:11.5,fill:C.ink});
+g+=T(120,359,'H3: the effect is INDIRECT \u2014 mediated by perceived diversity climate.',{size:11.5,fill:C.navy,weight:700});
+g+=T(120,391,'Colourblindness forces minorities to drop their identity \u2192 no open-climate signal.',{size:11.5,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','Three policies: <b>multiculturalism</b> (value your group), <b>value-in-individual-differences</b>, and <b>value-in-homogeneity</b> (colourblind).'],
+['2','<b>Multiculturalism</b> affirms minority identity and signals an open climate.'],
+['3','<b>Colourblindness</b> makes only the common identity salient and ignores minorities\u2019 disadvantages.'],
+['4','<b>H1/H2</b>: value-difference policies raise perceived open climate and leadership self-perceptions.'],
+['5','<b>H3</b>: the effect is <b>indirect</b> \u2014 it runs through perceived diversity climate.']
+],
+hook:'Two signs say \u201Cwe value who you are\u201D and one says \u201Cwe don\u2019t see difference.\u201D Only the first two tell minorities the room is open \u2014 and openness, not the sign itself, builds their ambition.'});
+
+/* L14 — findings & conclusion */
+addLesson({num:14,topic:'G\u00FCndemir 2017',title:'Findings & Conclusion',
+svg:(function(){var g='';
+g+=T(420,36,'Policy \u2192 climate \u2192 leadership (only for minorities)',{anchor:'middle',size:13,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=boxC(60,66,210,120,[{t:'STUDY 1 (US)',size:12,fill:C.navy,weight:700},{t:'162 adults; minimal-',size:10.5,fill:C.ink},{t:'group \u201CPersonality D\u201D',size:10.5,fill:C.ink},{t:'\u2192 policy raised climate;',size:10.5,fill:C.mut},{t:'INDIRECT effect on',size:10.5,fill:C.mut},{t:'self-efficacy',size:10.5,fill:C.mut}],{stroke:C.slate});
+g+=boxC(300,66,210,120,[{t:'STUDY 2 (NL)',size:12,fill:C.navy,weight:700},{t:'119 adults; real',size:10.5,fill:C.ink},{t:'ethnic minorities',size:10.5,fill:C.ink},{t:'\u2192 \u2191 self-efficacy,',size:10.5,fill:C.green},{t:'outcome expectations,',size:10.5,fill:C.green},{t:'willingness to apply',size:10.5,fill:C.green}],{stroke:C.green});
+g+=boxC(540,66,245,120,[{t:'SPECIFICITY',size:12,fill:C.navy,weight:700},{t:'effects only for',size:10.5,fill:C.ink},{t:'MINORITIES;',size:10.5,fill:C.gold,weight:700},{t:'majority members',size:10.5,fill:C.ink},{t:'unaffected; runs via',size:10.5,fill:C.mut},{t:'perceived climate',size:10.5,fill:C.mut}],{stroke:C.gold});
+g+=R(95,210,700,90,{stroke:C.line});
+g+=T(120,236,'Conclusion:',{size:12,weight:700,fill:C.navy});
+g+=T(215,236,'value-difference policies signal an open climate \u2192 lift minorities\u2019 leadership',{size:11.5,fill:C.ink});
+g+=T(120,258,'confidence & ambition. Colourblindness does not. The effect is INDIRECT (via climate).',{size:11.5,fill:C.ink});
+g+=T(120,286,'Implication: to grow minority leaders, visibly VALUE difference \u2014 don\u2019t go colourblind.',{size:11.5,fill:C.gold,style:'italic'});
+g+=R(95,318,700,100,{stroke:C.line});
+g+=T(120,344,'Limitations:',{size:12,weight:700,fill:C.navy});
+g+=T(215,344,'imagined situations & fictional companies; two individualist countries (US, NL);',{size:11.5,fill:C.ink});
+g+=T(120,368,'focused on racial-ethnic minorities; no long-term career outcomes; no test of majority backlash.',{size:11.5,fill:C.mut});
+g+=T(120,398,'Contribution: treats minorities as ACTORS and names perceived climate as the mechanism.',{size:11,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','<b>Study 1</b> (US, minimal-group): policy raised perceived climate and, indirectly, leadership self-efficacy.'],
+['2','<b>Study 2</b> (NL, real ethnic minorities): multiculturalism raised self-efficacy, outcome expectations & willingness to apply.'],
+['3','Effects were <b>specific to minorities</b> \u2014 majority members were unaffected.'],
+['4','The effect runs <b>indirectly through perceived diversity climate</b>.'],
+['5','<b>Limitations</b>: imagined companies; two individualist countries; racial-ethnic focus; no long-term outcomes.']
+],
+hook:'Tell minorities \u201Cwe value difference\u201D and they read the room as open \u2014 and that openness, not the policy text, is what makes them step toward leadership.'});
+
+/* L15 — diversity perspectives & dimensionality */
+addLesson({num:15,topic:'Hofhuis & Vietze 2025',title:'Diversity Perspectives: 1D & 2D',
+svg:(function(){var g='';
+g+=T(420,36,'How organisations frame \u201Cwhy diversity?\u201D',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=T(225,66,'ONE-DIMENSIONAL',{anchor:'middle',size:12.5,fill:C.navy,weight:700});
+g+=LN(90,110,360,110,{sw:3});g+=PATH('M360,110 l-10,-5 l0,10 z',{fill:C.slate,stroke:'none'});g+=PATH('M90,110 l10,-5 l0,10 z',{fill:C.slate,stroke:'none'});
+g+=T(90,96,'negative',{size:10.5,fill:C.red});g+=T(360,96,'positive',{size:10.5,fill:C.green,anchor:'end'});
+g+=T(225,134,'attitudes / value-in-diversity beliefs',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(225,154,'(can backfire: high-status threat)',{anchor:'middle',size:10,fill:C.mut});
+g+=LN(420,60,420,180,{stroke:C.line,sw:1,dash:'3 5'});
+g+=T(615,66,'TWO-DIMENSIONAL',{anchor:'middle',size:12.5,fill:C.navy,weight:700});
+g+=boxC(480,86,140,44,[{t:'MULTICULTURAL',size:10.5,fill:C.green,weight:700},{t:'value difference',size:9.5,fill:C.mut}],{stroke:C.green});
+g+=boxC(630,86,150,44,[{t:'COLOURBLIND',size:10.5,fill:C.red,weight:700},{t:'ignore difference',size:9.5,fill:C.mut}],{stroke:C.red});
+g+=T(615,150,'(independent, not just opposites)',{anchor:'middle',size:10,fill:C.mut});
+g+=R(95,195,700,223,{stroke:C.line});
+g+=T(120,221,'MULTICULTURAL (identity-conscious):',{size:12,weight:700,fill:C.green});
+g+=T(120,243,'value differences as added value; minorities keep their in-group identity \u2192 belonging,',{size:11.5,fill:C.ink});
+g+=T(120,263,'openness, inclusion. Risk: high-status members may feel their culture threatened.',{size:11.5,fill:C.mut});
+g+=T(120,295,'COLOURBLIND (identity-blind):',{size:12,weight:700,fill:C.red});
+g+=T(120,317,'downplay difference for \u201Cequality / meritocracy.\u201D But norms reflect the majority, so it',{size:11.5,fill:C.ink});
+g+=T(120,337,'tends to disadvantage minorities, reduce inclusion & harm communication.',{size:11.5,fill:C.mut});
+g+=T(120,369,'Low-status groups prefer multiculturalism; they experience colourblindness as exclusionary',{size:11.5,fill:C.ink});
+g+=T(120,389,'\u2014 \u201Cneither colourblind nor colour-neutral.\u201D',{size:11.5,fill:C.gold,style:'italic'});
+return svg(g);})(),
+bullets:[
+['1','A <b>diversity perspective</b> is an organisation\u2019s belief about why/how to handle diversity.'],
+['2','<b>One-dimensional</b> frameworks rate attitudes on a positive\u2013negative continuum (value-in-diversity beliefs).'],
+['3','Positive attitudes help performance & communication \u2014 but can trigger high-status threat or stereotype threat.'],
+['4','<b>Two-dimensional</b>: <b>multicultural</b> (value difference \u2192 inclusion) vs. <b>colourblind</b> (ignore difference \u2192 exclusion).'],
+['5','Low-status groups prefer multiculturalism and experience colourblindness as exclusionary.']
+],
+hook:'\u201CWe value your difference\u201D opens the door; \u201Cwe don\u2019t see difference\u201D sounds fair but quietly locks minorities out \u2014 they feel it as neither colourblind nor colour-neutral.'});
+
+/* L16 — business case vs moral */
+addLesson({num:16,topic:'Hofhuis & Vietze 2025',title:'Business Case vs. Moral',
+svg:(function(){var g='';
+g+=T(420,38,'Two reasons to pursue diversity',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=R(70,70,330,170,{stroke:C.slate,sw:1.5});
+g+=T(235,98,'BUSINESS CASE',{anchor:'middle',size:14,fill:C.navy,weight:700});
+g+=T(235,122,'\u201Cdiversity makes us',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(235,140,'more productive\u201D',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(235,168,'instrumental / profit',{anchor:'middle',size:11,fill:C.mut});
+g+=T(235,192,'more knowledge \u2192 better',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(235,210,'creativity, decisions',{anchor:'middle',size:10.5,fill:C.mut});
+g+=R(440,70,330,170,{stroke:C.gold,sw:1.5});
+g+=T(605,98,'MORAL',{anchor:'middle',size:14,fill:C.navy,weight:700});
+g+=T(605,122,'\u201Cdiversity is the',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(605,140,'right / fair thing\u201D',{anchor:'middle',size:11.5,fill:C.ink});
+g+=T(605,168,'justice / social responsibility',{anchor:'middle',size:11,fill:C.mut});
+g+=T(605,192,'reduce inequality, fight',{anchor:'middle',size:10.5,fill:C.mut});
+g+=T(605,210,'discrimination, include',{anchor:'middle',size:10.5,fill:C.mut});
+g+=R(95,268,700,150,{stroke:C.line});
+g+=T(120,294,'Often seen as opposed, but motives mix:',{size:12,weight:700,fill:C.navy});
+g+=T(140,318,'\u2022 moral statements can also protect reputation;',{size:11.5,fill:C.ink});
+g+=T(140,340,'\u2022 business-case arguments can persuade managers to act.',{size:11.5,fill:C.ink});
+g+=T(120,370,'Context matters: a PUBLIC body using a business-case framing seems LESS moral &',{size:11.5,fill:C.mut});
+g+=T(120,390,'less attractive \u2014 the public expects justice, not profit. Both can help or harm by climate.',{size:11.5,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','<b>Business-case</b> perspective: pursue diversity for performance/profit (more knowledge \u2192 better outcomes).'],
+['2','<b>Moral</b> perspective: pursue diversity as a fairness/social-responsibility obligation.'],
+['3','Often seen as opposed and hard to combine, but real motives are <b>mixed</b>.'],
+['4','<b>Context</b>: a public-sector body using a business-case framing is seen as less moral and less attractive.'],
+['5','Both perspectives can help or harm depending on the organisation\u2019s climate and goals.']
+],
+hook:'\u201CDiversity pays\u201D (business case) persuades managers; \u201Cdiversity is right\u201D (moral) persuades the public \u2014 and a government that argues only the first looks suspect.'});
+
+/* L17 — multidimensional frameworks */
+addLesson({num:17,topic:'Hofhuis & Vietze 2025',title:'Multidimensional Frameworks',
+svg:(function(){var g='';
+g+=T(420,36,'Richer typologies of diversity perspectives',{anchor:'middle',size:13.5,fill:C.navy,weight:600,font:'Cormorant Garamond, serif'});
+g+=R(55,60,360,120,{stroke:C.slate});
+g+=T(235,86,'Ely & Thomas (2001) \u2014 3 perspectives',{anchor:'middle',size:11.5,fill:C.navy,weight:700});
+g+=T(72,110,'\u2022 Discrimination-and-fairness (MORAL)',{size:10.8,fill:C.ink});
+g+=T(72,132,'\u2022 Access-and-legitimacy (MARKET)',{size:10.8,fill:C.ink});
+g+=T(72,154,'\u2022 Integration-and-learning (INNOVATION)',{size:10.8,fill:C.ink});
+g+=R(435,60,350,120,{stroke:C.slate});
+g+=T(610,86,'Podsiadlowski et al. (2013) \u2014 5',{anchor:'middle',size:11.5,fill:C.navy,weight:700});
+g+=T(452,110,'reinforcing homogeneity \u2022 colourblind \u2022',{size:10.8,fill:C.ink});
+g+=T(452,132,'fairness \u2022 access \u2022',{size:10.8,fill:C.ink});
+g+=T(452,154,'integration-and-learning',{size:10.8,fill:C.ink});
+g+=R(95,200,700,218,{stroke:C.gold,sw:1.5});
+g+=T(420,226,'Benefits & Threats of Diversity Scale (BTDS, Hofhuis et al. 2015)',{anchor:'middle',size:12,fill:C.navy,weight:700});
+g+=T(120,252,'5 BENEFITS',{size:11.5,fill:C.green,weight:700});
+g+=T(120,274,'\u2022 social-responsibility image',{size:10.8,fill:C.ink});
+g+=T(120,294,'\u2022 job-market appeal',{size:10.8,fill:C.ink});
+g+=T(120,314,'\u2022 pleasant social environment',{size:10.8,fill:C.ink});
+g+=T(120,334,'\u2022 understanding groups in society',{size:10.8,fill:C.ink});
+g+=T(120,354,'\u2022 creative potential',{size:10.8,fill:C.ink});
+g+=T(470,252,'4 THREATS (Intergroup Threat Theory)',{size:11.5,fill:C.red,weight:700});
+g+=T(470,274,'\u2022 realistic threat (career/status)',{size:10.8,fill:C.ink});
+g+=T(470,294,'\u2022 symbolic threat (values)',{size:10.8,fill:C.ink});
+g+=T(470,314,'\u2022 intergroup anxiety',{size:10.8,fill:C.ink});
+g+=T(470,334,'\u2022 productivity loss',{size:10.8,fill:C.ink});
+g+=T(470,366,'maps the precise hopes & fears about diversity',{size:10.5,fill:C.gold,style:'italic'});
+return svg(g);})(),
+bullets:[
+['1','Multidimensional typologies capture several perspectives at once.'],
+['2','<b>Ely & Thomas (2001)</b>: discrimination-and-fairness (moral), access-and-legitimacy (market), integration-and-learning (innovation).'],
+['3','<b>Podsiadlowski (2013)</b> adds negatives: reinforcing homogeneity, colourblind, fairness, access, integration-and-learning.'],
+['4','<b>BTDS</b>: five benefits (image, job market, social environment, understanding groups, creative potential).'],
+['5','BTDS four threats (Intergroup Threat Theory): realistic, symbolic, intergroup anxiety, productivity loss.']
+],
+hook:'Beyond \u201Cgood vs bad,\u201D these maps name exactly why a workplace embraces diversity (image, market, learning) \u2014 and exactly what it fears (status, values, awkwardness, productivity).'});
+
+/* L18 — positive vs negative & alignment */
+addLesson({num:18,topic:'Hofhuis & Vietze 2025',title:'Positive vs. Negative & Alignment',
+svg:(function(){var g='';
+g+=R(60,60,330,170,{stroke:C.green,sw:1.5});
+g+=T(225,86,'POSITIVE perspectives',{anchor:'middle',size:12.5,fill:C.green,weight:700});
+g+=T(80,112,'multicultural \u2022 moral \u2022 fairness \u2022',{size:10.8,fill:C.ink});
+g+=T(80,132,'access \u2022 integration-and-learning',{size:10.8,fill:C.ink});
+g+=T(80,160,'\u2192 inclusion, belonging, well-being',{size:11,fill:C.ink});
+g+=T(80,180,'\u2192 open, trusting communication',{size:11,fill:C.ink});
+g+=T(80,206,'risk: majority / stereotype threat',{size:10.5,fill:C.mut});
+g+=R(440,60,330,170,{stroke:C.red,sw:1.5});
+g+=T(605,86,'NEGATIVE perspectives',{anchor:'middle',size:12.5,fill:C.red,weight:700});
+g+=T(460,112,'resistance \u2022 reinforcing homogeneity',{size:10.8,fill:C.ink});
+g+=T(460,132,'\u2022 colourblind-as-denial',{size:10.8,fill:C.ink});
+g+=T(460,160,'\u2192 less inclusion, identity threat',{size:11,fill:C.ink});
+g+=T(460,180,'\u2192 weaker communication',{size:11,fill:C.ink});
+g+=T(460,206,'but: protect the status quo',{size:10.5,fill:C.mut});
+g+=R(95,258,700,160,{stroke:C.gold,sw:1.5});
+g+=T(420,286,'THE GOLDEN RULE: alignment',{anchor:'middle',size:13,fill:C.navy,weight:700});
+g+=T(120,314,'A policy that clashes with the perspectives already held does MORE HARM than good',{size:11.5,fill:C.ink});
+g+=T(120,336,'(it breeds resistance and threat). An aligned policy strengthens inclusion.',{size:11.5,fill:C.ink});
+g+=T(120,366,'\u2192 First MEASURE the diversity beliefs in the workforce, then design a fitting strategy.',{size:11.5,fill:C.gold,style:'italic'});
+g+=T(120,392,'Future research: non-Western contexts, other diversity dimensions, real-life/computational data, change over time.',{size:10.8,fill:C.mut});
+return svg(g);})(),
+bullets:[
+['1','<b>Positive</b> perspectives (multicultural, moral, fairness, access, integration) boost inclusion, belonging & open communication.'],
+['2','<b>Negative</b> perspectives (resistance, reinforcing homogeneity, colourblind-as-denial) reduce inclusion & harm communication.'],
+['3','Even positive perspectives can <b>backfire</b> (majority threat, stereotype threat).'],
+['4','<b>Alignment is the golden rule</b>: a policy clashing with existing beliefs does more harm than good.'],
+['5','First <b>measure</b> the perspectives present, then design a fitting strategy; future work: non-Western, computational, longitudinal.']
+],
+hook:'Valuing difference includes; ignoring or resisting it excludes \u2014 but the master rule is fit: drop a policy that clashes with what people already believe and you make things worse.'});
+
+/* ===================== FLASHCARDS ===================== */
+const cards=[
+{t:'Heine Ch.5',q:'Social loafing',a:'Exerting <b>less effort</b> in a group when your individual contribution can\u2019t be identified (the rope-pull study).'},
+{t:'Heine Ch.5',q:'Social striving',a:'The opposite of loafing: working <b>harder in a valued in-group</b> than alone \u2014 common in collectivist cultures.'},
+{t:'Heine Ch.5',q:'Guanxi (and the eBay lesson)',a:'Chinese reciprocal relationships + mutual obligation. eBay failed in China by ignoring guanxi; TaoBao let people build connections and won.'},
+{t:'Heine Ch.5',q:'Diversity as a double-edged sword',a:'<b>Cost</b>: friction (stereotyping, distrust, weak cohesion). <b>Benefit</b>: an information resource \u2192 deeper processing & creativity.'},
+{t:'Heine Ch.5',q:'Creativity (definition)',a:'The generation of ideas that are both <b>novel AND useful</b> (Amabile). A jelly hammer is novel but useless.'},
+{t:'Heine Ch.5',q:'Novelty vs. usefulness by culture',a:'<b>Individualism</b> \u2192 novelty \u2192 breakthrough innovation; <b>collectivism</b> \u2192 usefulness \u2192 incremental innovation (Japan leads patents).'},
+{t:'Heine Ch.5',q:'GLOBE: universal leadership types',a:'Two were desired everywhere: <b>charismatic/value-based</b> and <b>team-oriented</b>. Universally bad: egocentric, ruthless, loner.'},
+{t:'Heine Ch.5',q:'Culture-contingent leadership',a:'Work only in some cultures: <b>humane</b> (S. Asia), <b>autonomous</b> (E. Europe), <b>participative</b> (N. Europe), <b>self-protective</b>.'},
+{t:'Heine Ch.5',q:'Paternalistic leadership',a:'A leader who guides work AND personal life like a caring-but-firm parent; loyalty in return. Valued in Asian/Latin/Middle-Eastern orgs.'},
+{t:'Heine Ch.5',q:'Rational persuasion',a:'Influence via facts + reasoned arguments; effective for American managers but can disrupt hierarchy elsewhere (e.g. China).'},
+{t:'Heine Ch.5',q:'Wasta / jeitinho / ringi',a:'<b>Wasta</b> = Arab \u201Cconnections/pull\u201D; <b>jeitinho</b> = Brazilian creative work-arounds; <b>ringi/nemawashi</b> = Japanese consensus-building.'},
+{t:'Heine Ch.5',q:'Distributive justice: 3 principles',a:'<b>Equity</b> (reward by contribution), <b>equality</b> (same for all), <b>need</b> (most to the neediest).'},
+{t:'Heine Ch.5',q:'Cross-cultural justice (Berman)',a:'Americans split a bonus by <b>equity</b> (reward the excellent worker); Indians by <b>need</b> (help the needy worker).'},
+{t:'Heine Ch.5',q:'Meritocracy vs. seniority',a:'Meritocracy = equity (individualist, motivating, competitive). Seniority = equality (protects harmony, weakens effort\u2013reward link).'},
+{t:'Heine Ch.5',q:'Zero-sum vs. non-zero-sum',a:'Competitive (one\u2019s gain = other\u2019s loss, chess) vs. cooperative (both can gain, trade). Collectivist children cooperate more (marble game).'},
+{t:'Heine Ch.5',q:'Negotiation strategies',a:'<b>Confrontational/adversarial</b> (press your cause, threats) vs. <b>compromise</b> (satisfy both). Collectivists compromise; individualists confront.'},
+{t:'Heine Ch.5',q:'Anger in negotiation',a:'Expressing anger wins concessions from <b>Americans</b> but backfires with <b>East Asians</b>, who prefer apology to restore trust.'},
+{t:'Hofstede 2011',q:'Definition of culture',a:'\u201CThe <b>collective programming of the mind</b> that distinguishes the members of one group or category of people from others.\u201D'},
+{t:'Hofstede 2011',q:'Values vs. practices',a:'National culture lives in deep <b>values</b> (learned young, unconscious); organisational culture in visible <b>practices</b> (learned on the job).'},
+{t:'Hofstede 2011',q:'What is a dimension?',a:'An aspect of a culture that can be <b>measured relative to others</b> and positions countries on a scale.'},
+{t:'Hofstede 2011',q:'Pattern variables (Parsons & Shils)',a:'Five forced choices (e.g. self- vs collectivity-orientation, universalism vs particularism) \u2014 a predecessor of dimensions.'},
+{t:'Hofstede 2011',q:'Value orientations (Kluckhohn & Strodtbeck)',a:'Five: human nature, people\u2013nature, time, activity, relationships \u2014 a society\u2019s answers to universal questions.'},
+{t:'Hofstede 2011',q:'Grid & group (Mary Douglas)',a:'<b>Group</b> = the claim the group makes over members; <b>grid</b> = the degree interaction is governed by rules.'},
+{t:'Hofstede 2011',q:'IBM survey & ecological level',a:'100,000+ questionnaires, 50+ countries; analysed at the <b>country (ecological) level</b> \u2014 patterns differ from the individual level.'},
+{t:'Hofstede 2011',q:'Power Distance (PDI)',a:'The extent to which less-powerful members <b>accept and expect unequal power</b>. High = obey, hierarchy; low = consult, equality.'},
+{t:'Hofstede 2011',q:'Uncertainty Avoidance (UAI)',a:'A society\u2019s (dis)comfort with <b>ambiguity</b>. High = need rules/clarity, \u201Cone Truth\u201D, more stress; low = relaxed, tolerant.'},
+{t:'Hofstede 2011',q:'Individualism vs. Collectivism (IDV)',a:'How integrated people are into groups: loose ties / \u201CI\u201D (individualism) vs. strong in-groups / \u201Cwe\u201D / loyalty (collectivism).'},
+{t:'Hofstede 2011',q:'Masculinity vs. Femininity (MAS)',a:'Distribution of values across genders: assertive, competitive, \u201Clive to work\u201D vs. modest, caring, \u201Cwork to live.\u201D'},
+{t:'Hofstede 2011',q:'LTO & Indulgence (IVR)',a:'<b>LTO</b>: future focus (perseverance, thrift) vs. present/past (tradition, \u2018face\u2019). <b>IVR</b>: free gratification vs. restraint by strict norms.'},
+{t:'Hofstede 2011',q:'Two big cautions',a:'Always control for <b>wealth</b> (it tracks individualism & low PDI); never use a country\u2019s <b>average to stereotype an individual</b>.'},
+{t:'G\u00FCndemir 2017',q:'Aim of the study',a:'Test whether formal diversity policies shape <b>minorities\u2019 leadership self-perceptions and goals</b>, and the mechanism.'},
+{t:'G\u00FCndemir 2017',q:'The minority leadership gap',a:'Minorities are scarce at the top (e.g. ~1% of Dutch top posts); the gap stems from external barriers AND internal self-perceptions.'},
+{t:'G\u00FCndemir 2017',q:'The three policy ideologies',a:'<b>Multiculturalism</b> (value your group), <b>value-in-individual-differences</b> (value you as unique), <b>value-in-homogeneity</b> (colourblind).'},
+{t:'G\u00FCndemir 2017',q:'The mediating mechanism',a:'Policy \u2192 <b>perceived OPEN diversity climate</b> \u2192 leadership self-efficacy & aspiration. The effect is INDIRECT, not direct.'},
+{t:'G\u00FCndemir 2017',q:'Main findings',a:'Multiculturalism (& value-in-individual) raised minorities\u2019 self-efficacy, outcome expectations & willingness to apply \u2014 only for MINORITIES, via climate. Colourblindness did not.'},
+{t:'G\u00FCndemir 2017',q:'Limitations',a:'Imagined situations / fictional companies; two individualist countries (US, NL); racial-ethnic focus; no long-term outcomes.'},
+{t:'Hofhuis & Vietze 2025',q:'Diversity perspective',a:'The lens \u2014 beliefs, motivations, rationales \u2014 through which an organisation views the value of diversity (shapes inclusion & communication).'},
+{t:'Hofhuis & Vietze 2025',q:'One- vs. two-dimensional frameworks',a:'1D = a single positive\u2013negative attitude continuum; 2D = independent/contrasting pairs (multicultural vs colourblind; business-case vs moral).'},
+{t:'Hofhuis & Vietze 2025',q:'Multicultural vs. colourblind',a:'Multicultural = value difference \u2192 inclusion & open communication. Colourblind = ignore difference \u2192 exclusion (minorities feel it as unfair).'},
+{t:'Hofhuis & Vietze 2025',q:'Business case vs. moral',a:'<b>Business case</b> = diversity for profit/performance. <b>Moral</b> = diversity for fairness/justice. Public bodies are expected to be moral.'},
+{t:'Hofhuis & Vietze 2025',q:'Ely & Thomas (2001)',a:'Three perspectives: discrimination-and-fairness (moral), access-and-legitimacy (market), integration-and-learning (innovation).'},
+{t:'Hofhuis & Vietze 2025',q:'Benefits & Threats of Diversity Scale',a:'5 benefits (image, job market, social environment, understanding groups, creative potential) + 4 threats (realistic, symbolic, intergroup anxiety, productivity loss).'},
+{t:'Hofhuis & Vietze 2025',q:'Negative perspectives',a:'Resistance, reinforcing homogeneity, and colourblind-as-denial \u2014 they reduce belonging and harm communication.'},
+{t:'Hofhuis & Vietze 2025',q:'The alignment conclusion',a:'A policy that <b>clashes</b> with the perspectives already held does more harm than good \u2014 measure beliefs first, then design a fitting strategy.'}
+];
+
+/* ===================== MCQ ===================== */
+const mcqs=[
+{q:'Why did eBay fail in the Chinese market, according to Heine?',o:['Its prices were too high','Its model of anonymous buyers/sellers ignored guanxi (relationships)','China banned foreign companies','It had no website'],c:1,e:'eBay ignored guanxi \u2014 the norm of building trusting, mutually-obligated relationships \u2014 while TaoBao let users chat and build connections, and won.'},
+{q:'\u201CSocial striving\u201D (vs. social loafing) is most characteristic of \u2026',o:['individualist cultures','collectivist cultures','no culture','only children'],c:1,e:'Collectivists may work harder in a valued in-group than alone (striving); individualists are more prone to loafing when effort is hidden.'},
+{q:'Heine defines creativity as ideas that are \u2026',o:['novel only','useful only','both novel and useful','expensive'],c:2,e:'Creativity = novelty AND usefulness (Amabile). Individualism tends to supply novelty; collectivism supplies usefulness.'},
+{q:'Which two leadership types did the GLOBE project find universally desirable?',o:['Autonomous and self-protective','Charismatic/value-based and team-oriented','Humane and participative','Paternalistic and autocratic'],c:1,e:'Charismatic/value-based and team-oriented leaders were valued everywhere; humane, autonomous, participative and self-protective are culture-contingent.'},
+{q:'Paternalistic leadership is best described as \u2026',o:['a hands-off, laissez-faire style','guiding employees\u2019 work and personal lives like a caring-but-firm parent','focusing only on the leader\u2019s own safety','involving everyone in every decision'],c:1,e:'Paternalistic leaders nurture but also demand loyalty/deference; valued in Asian, Latin and Middle-Eastern organisations, resented as intrusive in individualist ones.'},
+{q:'\u201CGuanxi\u201D, \u201Cwasta\u201D and \u201Cjeitinho\u201D are all examples of \u2026',o:['leadership traits','culture-specific influence tactics','justice principles','Hofstede dimensions'],c:1,e:'They are relationship/work-around influence tactics: Chinese guanxi, Arab wasta, Brazilian jeitinho \u2014 alternatives to American rational persuasion.'},
+{q:'An organisation that pays everyone the same regardless of output is using the principle of \u2026',o:['equity','equality','need','merit'],c:1,e:'Equality = the same for all (e.g. seniority systems). Equity rewards contribution; need directs most to the neediest.'},
+{q:'In Berman\u2019s study, compared with Americans, Indian participants were more likely to split a bonus by \u2026',o:['equity (reward the excellent worker)','need (help the needy worker)','equality','random chance'],c:1,e:'Indians favoured need (help the needy worker); Americans favoured equity (reward the excellent worker) \u2014 a collectivist vs. individualist contrast.'},
+{q:'A cooperative (non-zero-sum) exchange is one where \u2026',o:['one person\u2019s gain is the other\u2019s loss','both parties can gain (e.g. trade)','no one can gain','only the leader gains'],c:1,e:'Non-zero-sum = both can win (trade); zero-sum = one\u2019s gain is the other\u2019s loss (chess). Collectivist children cooperated more in the marble game.'},
+{q:'Hofstede defines culture as \u2026',o:['a person\u2019s individual personality','the collective programming of the mind that distinguishes one group from another','a country\u2019s laws','genetic inheritance'],c:1,e:'Culture is shared (collective) mental programming \u2014 deep values for nations, visible practices for organisations.'},
+{q:'The key methodological move in the IBM study was to analyse data at the \u2026',o:['individual level','ecological (country) level','genetic level','organisational level only'],c:1,e:'Switching to country-level (ecological) analysis revealed culture patterns that differ from \u2014 and shouldn\u2019t be confused with \u2014 individual-level ones.'},
+{q:'\u201CThe extent to which less-powerful members accept that power is distributed unequally\u201D defines which dimension?',o:['Uncertainty Avoidance','Power Distance','Masculinity','Indulgence'],c:1,e:'That is Power Distance (PDI). Uncertainty Avoidance is about discomfort with ambiguity; Masculinity about assertive vs. caring values.'},
+{q:'A culture high in Uncertainty Avoidance tends to \u2026',o:['be relaxed about ambiguity and have few rules','feel that \u201Cwhat is different is dangerous\u201D and need rules and clarity','value leisure and free gratification','focus on long-term thrift'],c:1,e:'High UAI cultures are uncomfortable with the unknown, want rules and structure, and lean toward \u201Cone Truth\u201D; low UAI cultures find difference curious.'},
+{q:'Hofstede warns that national culture scores should NOT be used to \u2026',o:'control for wealth,stereotype individuals,compare countries,position cultures on a scale'.split(','),c:1,e:'Scores describe societies, not persons \u2014 within-culture variation is huge, so they must not be used to stereotype individuals. He also warns to control for wealth.'},
+{q:'In G\u00FCndemir et al., diversity policies raised minorities\u2019 leadership self-perceptions \u2026',o:['directly','indirectly, through a perceived open diversity climate','only for majority members','not at all'],c:1,e:'The effect was indirect: multiculturalism (and value-in-individual-differences) raised perceived OPEN climate, which raised leadership self-efficacy/goals \u2014 only for minorities.'},
+{q:'Which policy did NOT improve minorities\u2019 leadership self-perceptions in G\u00FCndemir et al.?',o:['Multiculturalism','Value-in-individual-differences','Value-in-homogeneity (colourblind)','All improved them equally'],c:2,e:'The colourblind value-in-homogeneity policy failed to signal an open climate; only the difference-valuing policies raised minorities\u2019 leadership confidence and ambition.'},
+{q:'In Hofhuis & Vietze, the business-case vs. moral distinction concerns \u2026',o:['one- vs. two-dimensional measurement','whether diversity is justified by profit/performance vs. by fairness/justice','colourblind vs. multicultural climates','benefits vs. threats'],c:1,e:'Business-case = instrumental (profit/performance); moral = fairness/social responsibility. A public body using only a business case is seen as less moral and less attractive.'},
+{q:'Hofhuis & Vietze\u2019s key practical conclusion is that diversity policy works best when it \u2026',o:['ignores existing employee beliefs','aligns with the diversity perspectives already held in the organisation','is always colourblind','maximises profit only'],c:1,e:'Alignment is the golden rule: a policy that clashes with prevailing perspectives breeds resistance and threat \u2014 so measure the beliefs present, then design a fitting strategy.'}
+];
+
+/* ===================== APP LOGIC ===================== */
+var state={lesson:0,filter:'All',cardOrder:cards.map(function(_,i){return i;}),score:0,answered:0};
+document.querySelectorAll('#nav button').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.view);});});
+function show(v){
+  document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('active',b.dataset.view===v);});
+  document.querySelectorAll('.view').forEach(function(s){s.classList.toggle('active',s.id===v);});
+  document.querySelector('.main').scrollTop=0;
+}
+function renderOverview(){
+  var groups=['Heine Ch.5','Hofstede 2011','G\u00FCndemir 2017','Hofhuis & Vietze 2025'];
+  var labels={'Heine Ch.5':'Heine Ch.5 \u2014 Culture at Work: Teams, Leadership & Justice','Hofstede 2011':'Hofstede (2011) \u2014 Dimensionalizing Cultures','G\u00FCndemir 2017':'G\u00FCndemir et al. (2017) \u2014 Diversity Policies & Minority Leadership','Hofhuis & Vietze 2025':'Hofhuis & Vietze (2025) \u2014 Diversity Perspectives'};
+  var h='<div class="eyebrow">Theme 4 \u00B7 The Multicultural Workplace</div>'+
+    '<h1 class="title">Culture Goes to Work</h1>'+
+    '<p class="lead">Eighteen whiteboard-style lessons across four readings \u2014 culture in teams, leadership and justice; Hofstede\u2019s dimensions; and how organisations should handle diversity. Click any card to open its diagram.</p><hr class="rule">';
+  groups.forEach(function(gp){
+    h+='<div class="sec-label">'+labels[gp]+'</div><div class="grid">';
+    lessons.forEach(function(L,i){ if(L.topic!==gp) return;
+      h+='<div class="ocard" data-i="'+i+'"><span class="chip">'+L.topic+'</span>'+
+         '<div class="nimg">'+L.svg+'</div><div class="nnum">Lesson '+L.num+'</div>'+
+         '<h3>'+L.title+'</h3><p>'+L.bullets[0][1].replace(/<[^>]+>/g,'')+'</p></div>';
+    });
+    h+='</div>';
+  });
+  document.getElementById('overview').innerHTML=h;
+  document.querySelectorAll('.ocard').forEach(function(c){c.addEventListener('click',function(){state.lesson=+c.dataset.i;renderLesson();show('lessons');});});
+}
+function renderLesson(){
+  var L=lessons[state.lesson];
+  var chips='<div class="chips">'+lessons.map(function(x,i){return '<button class="lchip'+(i===state.lesson?' active':'')+'" data-i="'+i+'">'+x.num+'. '+x.title+'</button>';}).join('')+'</div>';
+  var bl=L.bullets.map(function(b){return '<li><span class="dot">'+b[0]+'</span><span>'+b[1]+'</span></li>';}).join('');
+  var h='<div class="eyebrow">'+L.topic+'</div>'+
+    '<div class="lesson-top"><div><h1 class="title" style="font-size:33px">'+L.title+'</h1><div class="lesson-counter">Lesson '+L.num+' of '+lessons.length+'</div></div>'+
+    '<div class="navbtns"><button id="prevL"'+(state.lesson===0?' disabled':'')+'>\u2190 Prev</button><button id="nextL"'+(state.lesson===lessons.length-1?' disabled':'')+'>Next \u2192</button></div></div>'+
+    chips+
+    '<div class="stage"><div class="diagram-wrap"><div class="dtitle">\u270E Whiteboard</div>'+L.svg+'</div>'+
+    '<div class="side"><div class="bullets"><h4>Key points</h4><ul>'+bl+'</ul></div>'+
+    '<div class="hook"><div class="ht">\u2726 Memory hook</div><p>'+L.hook+'</p></div></div></div>';
+  document.getElementById('lessons').innerHTML=h;
+  var p=document.getElementById('prevL'),n=document.getElementById('nextL');
+  if(p)p.onclick=function(){if(state.lesson>0){state.lesson--;renderLesson();}};
+  if(n)n.onclick=function(){if(state.lesson<lessons.length-1){state.lesson++;renderLesson();}};
+  document.querySelectorAll('.lchip').forEach(function(c){c.addEventListener('click',function(){state.lesson=+c.dataset.i;renderLesson();});});
+  var active=document.querySelector('.lchip.active'); if(active&&active.scrollIntoView)active.scrollIntoView({inline:'center',block:'nearest'});
+}
+function renderFlash(){
+  var topics=['All','Heine Ch.5','Hofstede 2011','G\u00FCndemir 2017','Hofhuis & Vietze 2025'];
+  var shown=state.cardOrder.filter(function(i){return state.filter==='All'||cards[i].t===state.filter;});
+  var h='<div class="eyebrow">Active recall</div><h1 class="title">Flashcards</h1>'+
+    '<p class="lead">Click a card to flip. Filter by source, shuffle for a fresh order, or reset.</p><hr class="rule">'+
+    '<div class="fc-bar"><div class="filters">'+topics.map(function(t){return '<button class="'+(state.filter===t?'active':'')+'" data-f="'+t+'">'+t+'</button>';}).join('')+
+    '</div><div class="tools"><button id="shuf">\u21BB Shuffle</button><button id="reset" class="ghost">Reset</button></div></div>'+
+    '<div class="fc-count">'+shown.length+' cards</div><div class="fc-grid">'+
+    shown.map(function(i){var c=cards[i];return '<div class="flip" data-id="'+i+'"><div class="flip-in">'+
+      '<div class="face front"><div class="ftag">'+c.t+'</div><div class="q">'+c.q+'</div><div class="hint">tap to flip</div></div>'+
+      '<div class="face back"><div class="ftag">Answer</div><div class="a">'+c.a+'</div></div></div></div>';}).join('')+'</div>';
+  document.getElementById('flashcards').innerHTML=h;
+  document.querySelectorAll('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('flipped');});});
+  document.querySelectorAll('.fc-bar .filters button').forEach(function(b){b.addEventListener('click',function(){state.filter=b.dataset.f;renderFlash();});});
+  document.getElementById('shuf').onclick=function(){for(var a=state.cardOrder,k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var tmp=a[k];a[k]=a[j];a[j]=tmp;}renderFlash();};
+  document.getElementById('reset').onclick=function(){state.cardOrder=cards.map(function(_,i){return i;});state.filter='All';renderFlash();};
+}
+function renderMCQ(){
+  var h='<div class="eyebrow">Exam practice</div><h1 class="title">Multiple-Choice Questions</h1>'+
+    '<p class="lead">Pick an answer for instant feedback and an explanation. '+mcqs.length+' exam-style items.</p><hr class="rule">'+
+    '<div class="mcq-head"><div class="score">Score <b id="sc">0</b> / '+mcqs.length+'</div><div class="tools"><button id="mreset">Reset quiz</button></div></div>';
+  mcqs.forEach(function(m,qi){
+    h+='<div class="q-card" data-q="'+qi+'"><div class="qh"><span class="qn">'+(qi+1)+'</span><span class="qt">'+m.q+'</span></div><div class="opts">';
+    m.o.forEach(function(opt,oi){h+='<div class="opt" data-o="'+oi+'"><span class="ol">'+String.fromCharCode(65+oi)+'</span><span>'+opt+'</span></div>';});
+    h+='</div><div class="explain"><span class="verdict"></span> <span class="etext">'+m.e+'</span></div></div>';
+  });
+  document.getElementById('mcq').innerHTML=h;
+  state.score=0;state.answered=0;
+  document.querySelectorAll('.q-card').forEach(function(card){
+    var qi=+card.dataset.q,done=false;
+    card.querySelectorAll('.opt').forEach(function(opt){
+      opt.addEventListener('click',function(){
+        if(done)return;done=true;
+        var oi=+opt.dataset.o,correct=mcqs[qi].c;
+        card.querySelectorAll('.opt').forEach(function(o){o.classList.add('locked');var k=+o.dataset.o;if(k===correct)o.classList.add('correct');});
+        var ex=card.querySelector('.explain'),vd=card.querySelector('.verdict');
+        if(oi===correct){state.score++;vd.textContent='Correct.';vd.className='verdict ok';}
+        else{opt.classList.add('wrong');vd.textContent='Not quite.';vd.className='verdict no';}
+        ex.classList.add('show');document.getElementById('sc').textContent=state.score;
+      });
+    });
+  });
+  document.getElementById('mreset').onclick=function(){renderMCQ();};
+}
+renderOverview();renderLesson();renderFlash();renderMCQ();
+</script>
